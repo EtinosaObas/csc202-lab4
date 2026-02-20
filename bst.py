@@ -17,13 +17,6 @@ class BTNode:
 class BinarySearchTree:
     comes_before : Callable[[Any,Any], bool]
     bt : BinTree
-
-# Compares two values, returns T/F if the first is less/greater than the second
-def comes_before(a: Any, b: Any) -> bool:
-    if a < b:
-        return True
-    else:
-        return False
     
 # Returns whether or not a value exsists within a binary search tree
 def lookup(bst: BinarySearchTree, value:Any)-> bool:
@@ -33,7 +26,7 @@ def lookup(bst: BinarySearchTree, value:Any)-> bool:
             case None:
                 return False
             case BTNode(v, left, right):
-                if (not cb(value, v)) and (not cb(v, value)):
+                if not cb(value, v) and not cb(v, value):
                     return True
                 elif cb(value, v):  
                     return helper(left)
