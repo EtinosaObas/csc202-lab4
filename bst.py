@@ -33,4 +33,49 @@ def lookup(bst: BinarySearchTree, value:Any)-> bool:
                 else:                   
                     return helper(right)
     return helper(bst.bt)
+# Helper for insert
+def insert_helper(comes_before: Callable[[Any, Any], bool], tree: BinTree, value: Any) -> BinTree:
+    match tree:
+        case None:
+            return Node(value, None, None)
+        case Node(v, left, right):
+            if comes_before(value, v):
+                return Node(v, insert_helper(comes_before, left, value), right)
+            elif comes_before(v, value):
+                return Node(v, left, insert_helper(comes_before, right, value))
+            else:
+                return tree
+
+def insert(bst: BinarySearchTree, value: Any) -> BinarySearchTree:
+    return BinarySearchTree(bst.comes_before, insert_helper(bst.comes_before, bst.root, value))
+
+# Helper to find min
+def find_min(tree: BinTree) -> Any:
+    match tree:
+        case Node(v, None, _):
+            return v
+        case Node(_, left, _):
+            return find_min(left)
+
+# Helper for delete
+def delete_helper(comes_before: Callable[[Any, Any], bool], tree: BinTree, value: Any) -> BinTree:
+    match tree:
+        case None:
+            return None
+        case Node(v, left, right):
+            if comes_before(value, v):
+                return Node(v, delete_helper(comes_before, left, value), right)
+            elif comes_before(v, value):
+                return Node(v, left, delete_helper(comes_before, right, value))
+            else:
+                if left is None:
+                    return right
+                elif right is None:
+                    return left
+                else:
+                    min_val = find_min(right)
+                    return Node(min_val, left, delete_helper(comes_before, right, min_val))
+
+def delete(bst: BinarySearchTree, value: Any) -> BinarySearchTree:
+    return BinarySearchTree(bst.comes_before, delete_helper(bst.comes_before, bst.root, value))
         
