@@ -46,8 +46,11 @@ class BSTTests(unittest.TestCase):
         )
 
     def test_lookup(self):
+        # Point test for comes_before/lookup
         self.assertEqual(lookup(self.bst_3, Point2D(5, 5)), False)
+        # Alphabet test for comes_before/lookup
         self.assertEqual(lookup(self.bst_1, 'b'), True)
+        # Reverse order integer test for comes_before/lookup
         self.assertEqual(lookup(self.bst_2, 8), True)
 
 
