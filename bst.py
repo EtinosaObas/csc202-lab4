@@ -79,4 +79,3 @@ def delete_helper(comes_before: Callable[[Any, Any], bool], tree: BinTree, value
 
 def delete(bst: BinarySearchTree, value: Any) -> BinarySearchTree:
     return BinarySearchTree(bst.comes_before, delete_helper(bst.comes_before, bst.bt, value))
-        
